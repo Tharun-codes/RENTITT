@@ -6,6 +6,11 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import listingsRoutes from './routes/listings.js';
 import errorHandler from './middleware/errorHandler.js';
+import path from "path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -14,15 +19,17 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "../client")));
 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/listings', listingsRoutes);
 
 // Health check
-app.get('/', (req, res) => {
-  res.json({ message: 'RENTit API is running' });
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/index.html"));
 });
+
 
 // Error handler (must be last)
 app.use(errorHandler);
