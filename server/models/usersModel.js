@@ -9,12 +9,13 @@ export const findByEmail = async (email) => {
   return result.rows[0] || null;
 };
 
-export const createUser = async ({ email }) => {
+
+export async function createUser(email, password) {
   const result = await pool.query(
-    `INSERT INTO users (email)
-     VALUES ($1)
-     RETURNING *`,
-    [email]
+    "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
+    [email, password]
   );
   return result.rows[0];
-};
+}
+
+;

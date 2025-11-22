@@ -29,16 +29,26 @@ export const login = async (req, res, next) => {
   try {
     const { email } = req.body;
 
-    const { valid, error } = validateLoginInput({ email });
-    if (!valid) return res.status(400).json({ error });
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
 
-    const user = await Users.findByEmail(email);
+    // check if user exists
+    let user = await Users.findByEmail(email);
+
+    // ✅ AUTO REGISTER IF NOT FOUND
     if (!user) {
-      return res.status(404).json({ error: 'User not found. Please register.' });
+      user = await Users.createUser({ email });
     }
 
     const token = generateJWT({ id: user.id, email: user.email });
-    res.json({ user, token });
+
+    res.json({
+      message: "Login successful",
+      user,
+      token
+    });
+
   } catch (err) {
     next(err);
   }
