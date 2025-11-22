@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RENTit — Find Your Next Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="bg-slate-950 text-slate-50 min-h-screen">
+  <div id="app" class="max-w-6xl mx-auto px-4 pb-8">
+    <header class="flex items-center justify-between py-4">
+      <div class="flex items-center gap-2">
+        <img src="./assets/placeholder.jpg" alt="logo" class="w-8 h-8 rounded-md object-cover" />
+        <span class="font-bold text-xl tracking-tight">RENTit</span>
+      </div>
+      <nav class="flex items-center gap-4 text-sm">
+        <button id="loginBtn" class="px-3 py-1 rounded-lg border border-slate-700 hover:bg-slate-800">
+          Login
+        </button>
+        <button id="postBtn" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500">
+          Post Property
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="mt-6 mb-4">
+        <h1 class="text-2xl md:text-3xl font-semibold mb-2">
+          Find homes to <span class="text-indigo-400">Rent</span> or <span class="text-emerald-400">Buy</span>
+        </h1>
+        <p class="text-slate-400 text-sm md:text-base">
+          Search by location, filter by type, and explore verified listings.
+        </p>
+
+        <div class="mt-4 flex flex-col md:flex-row gap-3">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search by location (e.g. Chennai, Mumbai)..."
+            class="flex-1 px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-sm outline-none focus:ring focus:ring-indigo-500"
+          />
+          <button
+            id="searchBtn"
+            class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-medium"
+          >
+            Search
+          </button>
+        </div>
+      </section>
+
+      <section id="statusArea" class="mb-4">
+        <p id="loadingText" class="text-slate-400 text-sm">Loading listings...</p>
+        <p id="errorText" class="text-red-400 text-sm hidden"></p>
+      </section>
+
+      <section id="listingsGrid" class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Cards injected by app.js -->
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="./components/navbar.js"></script>
+  <script type="module" src="./components/card.js"></script>
+  <script type="module" src="./components/loader.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
