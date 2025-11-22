@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Post Property - RENTit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center">
+
+  <div class="bg-slate-800 p-6 rounded-lg w-full max-w-md">
+    <h2 class="text-xl font-bold mb-4 text-center">Post a Property</h2>
+
+    <input id="title" placeholder="Title" class="input"/>
+    <input id="location" placeholder="Location" class="input"/>
+    <input id="price" type="number" placeholder="Price" class="input"/>
+    <input id="image" placeholder="Image URL" class="input"/>
+
+    <select id="transaction" class="input">
+      <option value="rent">Rent</option>
+      <option value="sale">Sale</option>
+    </select>
+
+    <select id="propertyType" class="input">
+      <option value="apartment">Apartment</option>
+      <option value="house">House</option>
+    </select>
+
+    <input id="bedrooms" type="number" placeholder="Bedrooms" class="input"/>
+    <input id="area" type="number" placeholder="Area (sqft)" class="input"/>
+    <textarea id="description" placeholder="Description" class="input"></textarea>
+
+    <button onclick="postProperty()" class="bg-indigo-600 w-full py-2 rounded mt-3">
+      Post Property
+    </button>
+
+    <p id="msg" class="text-center text-sm mt-3"></p>
+  </div>
+
+<script>
+const API = "http://localhost:5000/api/listings";
+
+async function postProperty() {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login first!");
+    return;
+  }
+
+  const data = {
+    title: document.getElementById("title").value,
+    location: document.getElementById("location").value,
+    price: document.getElementById("price").value,
+    image_url: document.getElementById("image").value,
+    transaction_type: document.getElementById("transaction").value,
+    property_type: document.getElementById("propertyType").value,
+    bedrooms: document.getElementById("bedrooms").value,
+    area_sqft: document.getElementById("area").value,
+    description: document.getElementById("description").value
+  };
+
+  const res = await fetch(API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify(data)
+  });
+
+  const msg = document.getElementById("msg");
+
+  if (!res.ok) {
+    const err = await res.json();
+    msg.textContent = err.error || "Error posting property";
+    msg.style.color = "red";
+    return;
+  }
+
+  msg.textContent = "Property posted successfully ✅";
+  msg.style.color = "lightgreen";
+
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 1500);
+}
+</script>
+
+<style>
+.input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: white;
+}
+</style>
+
+</body>
+</html>

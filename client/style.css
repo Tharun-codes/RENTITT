@@ -1,0 +1,79 @@
+body {
+  font-family: system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+/* Cards */
+.listing-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.listing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+
+.listing-card img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.listing-card h2 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #38bdf8;
+}
+
+.meta {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.price {
+  color: #22c55e;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Inputs */
+input {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: white;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+input::placeholder {
+  color: #64748b;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 6px;
+}
+@media (max-width: 640px) {
+  .listing-card {
+    border-radius: 12px;
+  }
+
+  .listing-card img {
+    height: 180px;
+  }
+
+  body {
+    font-size: 14px;
+  }
+}
