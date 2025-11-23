@@ -86,10 +86,12 @@ async function login() {
     }
 
     if (!res.ok) {
-      msg.textContent = data.error || data.message || `Error: ${res.status} ${res.statusText}`;
+      const errorMsg = data.error || data.message || `Error: ${res.status} ${res.statusText}`;
+      msg.textContent = errorMsg;
       msg.className = "form-message message-error";
       loginButton.disabled = false;
       loginButton.textContent = originalText;
+      console.error('Login failed:', { status: res.status, data });
       return;
     }
 
@@ -101,7 +103,21 @@ async function login() {
       return;
     }
 
+    // Store token in localStorage
     localStorage.setItem("token", data.token);
+    
+    // Also store as rentit_token for backward compatibility
+    localStorage.setItem("rentit_token", data.token);
+    
+    // Verify token was stored
+    const storedToken = localStorage.getItem("token");
+    if (!storedToken) {
+      msg.textContent = "Failed to store login token. Please try again.";
+      msg.className = "form-message message-error";
+      loginButton.disabled = false;
+      loginButton.textContent = originalText;
+      return;
+    }
 
     msg.textContent = "Login Successful! Redirecting...";
     msg.className = "form-message message-success";
@@ -113,7 +129,15 @@ async function login() {
 
   } catch (err) {
     console.error("Login error:", err);
-    msg.textContent = err.message || "Unable to connect to server. Please check if the server is running.";
+    let errorMessage = "Unable to connect to server. ";
+    
+    if (err.message) {
+      errorMessage += err.message;
+    } else {
+      errorMessage += "Please check if the server is running on http://localhost:5000";
+    }
+    
+    msg.textContent = errorMessage;
     msg.className = "form-message message-error";
     loginButton.disabled = false;
     loginButton.textContent = originalText;

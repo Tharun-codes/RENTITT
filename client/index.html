@@ -104,12 +104,36 @@
   <script>
     function checkLogin(){
       const token = localStorage.getItem("token") || localStorage.getItem("rentit_token");
+      
       if (!token) {
+        alert("Please login first to post a property!");
         window.location.href = "login.html";
-      } else {
-        window.location.href = "post-property.html";
+        return;
       }
+      
+      // Verify token exists before redirecting
+      console.log("Token found, redirecting to post property page...");
+      window.location.href = "post-property.html";
     }
+    
+    // Update button text if user is logged in
+    window.addEventListener('DOMContentLoaded', function() {
+      const token = localStorage.getItem("token") || localStorage.getItem("rentit_token");
+      const loginBtn = document.getElementById("loginBtn");
+      const postBtn = document.getElementById("postBtn");
+      
+      if (token) {
+        // User is logged in
+        if (loginBtn) {
+          loginBtn.textContent = "Logout";
+          loginBtn.onclick = function() {
+            localStorage.removeItem("token");
+            localStorage.removeItem("rentit_token");
+            window.location.reload();
+          };
+        }
+      }
+    });
   </script>
 </body>
 </html>
