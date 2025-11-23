@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RENTit — Smart Real Estate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="min-h-screen bg-[#0f172a] text-white">
+
+  <!-- Navbar -->
+  <header class="flex flex-col sm:flex-row sm:items-center 
+                justify-between gap-3 py-4 mb-6 border-b border-slate-700">
+
+    <h1 class="text-xl sm:text-2xl font-bold text-sky-400 text-center sm:text-left">
+      RENTit
+    </h1>
+
+    <div class="flex justify-center gap-3">
+      <button id="loginBtn"
+        class="px-3 py-1 rounded bg-slate-800 border border-slate-600 text-sm">
+        Login
+      </button>
+
+      <button id="postBtn"
+        onclick="checkLogin()"
+        class="px-3 py-1 rounded bg-sky-600 hover:bg-sky-500 text-sm">
+        Post
+      </button>
+    </div>
+  </header>
+
+
+
+  <!-- Hero Section -->
+  <section class="max-w-6xl mx-auto text-center pt-10 px-4">
+    <h1 class="text-3xl md:text-5xl font-bold mb-2">
+      Find Your Perfect Home
+    </h1>
+    <p class="text-slate-400 mb-8">
+      Browse smart listings for Rent & Sale
+    </p>
+
+    <!-- Search Bar -->
+      <div class="mt-6 mb-6 flex flex-col sm:flex-row gap-3">
+
+    <input id="searchInput" type="text"
+      placeholder="Search city or area..."
+      class="w-full flex-1 px-4 py-2 rounded-lg bg-slate-800 border border-slate-600 
+            text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500">
+
+    <button id="searchBtn"
+      class="w-full sm:w-auto px-6 py-2 bg-sky-600 hover:bg-sky-500 rounded-lg 
+            font-medium transition">
+      Search
+    </button>
+
+  </div>
+
+
+      <select id="typeFilter" class="bg-slate-900 px-2 py-1 rounded text-sm">
+        <option value="all">All</option>
+        <option value="rent">Rent</option>
+        <option value="sale">Sale</option>
+      </select>
+
+      <button id="searchBtn" class="bg-indigo-600 px-4 py-1 rounded-lg text-sm">
+        Searchh
+      </button>
+    </div>
+  </section>
+
+  <!-- Listing Grid -->
+<section id="listingsGrid" 
+  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+</section>
+
+
+  <script type="module" src="./app.js"></script>
+
+  <script>
+    function checkLogin(){
+      const token = localStorage.getItem("rentit_token");
+      if (!token) window.location.href = "login.html";
+      else window.location.href = "post-property.html";
+    }
+  </script>
+</body>
+</html>
